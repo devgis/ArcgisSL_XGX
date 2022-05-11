@@ -1,0 +1,5 @@
+导出
+exp orcl/orcl@orcl file="E:\WORK\arcgis for silverlight\Work\DB\db0708.dmp" owner=orcl
+
+导入
+imp orcl/orcl@orcl  file="E:\WORK\arcgis for silverlight\Work\DB\db.dmp" ignore=y full=y

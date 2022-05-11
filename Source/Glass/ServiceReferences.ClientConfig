@@ -1,0 +1,16 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="DBServiceSoap" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:1833/Web/DBService.asmx"
+                binding="basicHttpBinding" bindingConfiguration="DBServiceSoap"
+                contract="DBWS.DBServiceSoap" name="DBServiceSoap" />
+        </client>
+    </system.serviceModel>
+</configuration>

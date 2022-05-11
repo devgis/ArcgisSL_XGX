@@ -1,0 +1,443 @@
+﻿<UserControl x:Class="Glass.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:esri="http://schemas.esri.com/arcgis/client/2009"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:userControls="clr-namespace:ESRI.ArcGIS.SilverlightMapApp"
+    xmlns:actions="clr-namespace:ESRI.ArcGIS.SilverlightMapApp.Actions"
+    xmlns:icons="clr-namespace:Toolkit.Icons"
+    xmlns:localtoolkit="clr-namespace:Toolkit"
+    xmlns:textControls="clr-namespace:TextControls"    
+    xmlns:slData="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+             xmlns:slPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data"
+    mc:Ignorable="d"  d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <DropShadowEffect x:Name="dropShadow" BlurRadius="10" ShadowDepth="10" Direction="-45" Color="Black" Opacity="0.5" />
+        <DropShadowEffect x:Name="darkDropShadow" BlurRadius="10" ShadowDepth="10" Direction="-45" Color="Black" Opacity="1" />
+        <DropShadowEffect x:Name="miniDropShadow" BlurRadius="5" ShadowDepth="5" Direction="-45" Color="Black" Opacity="0.5" />
+        <DropShadowEffect x:Name="miniDarkDropShadow" BlurRadius="5" ShadowDepth="5" Direction="-45" Color="Black" Opacity="1" />
+        <BlurEffect x:Name="blurEffect" />
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" >
+        <Grid.Resources>
+        <esri:MarkerSymbol x:Key="Symbol_Point" OffsetX="5.97335" OffsetY="4.57335">
+            <esri:MarkerSymbol.ControlTemplate>
+                <ControlTemplate>
+                    <Grid RenderTransformOrigin="0.5,0.5" Width="13.0667" Height="13.0667">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Canvas HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Path Fill="#00FFFFFF" Data="F1 M 13.0667,6.53333C 13.0667,8.34946 12.4318,9.89233 11.1621,11.1621C 9.89236,12.4318 8.34944,13.0667 6.53333,13.0667C 4.71722,13.0667 3.17431,12.4318 1.90458,11.1621C 0.634861,9.89233 -2.48353e-009,8.34946 -2.48353e-009,6.53333C -2.48353e-009,4.71719 0.634861,3.17429 1.90458,1.90457C 3.17431,0.634857 4.71722,0 6.53333,0C 8.33778,0 9.87486,0.640656 11.1446,1.92209C 12.426,3.19177 13.0667,4.72888 13.0667,6.53333 Z" />
+                            <Path Fill="Black" Data="F1 M 13.0667,6.53333C 13.0667,8.34946 12.4318,9.89233 11.1621,11.1621C 9.89236,12.4318 8.34944,13.0667 6.53333,13.0667C 4.71722,13.0667 3.17431,12.4318 1.90458,11.1621C 0.634861,9.89233 -2.48353e-009,8.34946 -2.48353e-009,6.53333C -2.48353e-009,4.71719 0.634861,3.17429 1.90458,1.90457C 3.17431,0.634857 4.71722,0 6.53333,0C 8.33778,0 9.87486,0.640656 11.1446,1.92209C 12.426,3.19177 13.0667,4.72888 13.0667,6.53333 Z M 10.3979,2.20206C 9.95069,1.76651 9.47819,1.46805 8.98042,1.30664C 8.8793,1.28137 8.68875,1.22839 8.40875,1.14771C 8.12875,1.06702 7.7593,0.964447 7.30042,0.839966L 7.09333,0.839966L 7.09333,3.63998L 7.80208,3.78873C 8.0393,3.86459 8.23278,3.99582 8.3825,4.1825L 10.3979,2.20206 Z M 12.2092,5.76917C 12.1956,5.69528 12.1766,5.58975 12.1523,5.45267C 12.128,5.31558 12.0964,5.14694 12.0575,4.94666C 11.8086,4.00168 11.4042,3.24332 10.8442,2.67163L 8.86667,4.68704C 9.09028,4.87375 9.27111,5.30249 9.40917,5.9733L 12.2092,5.9733L 12.2092,5.76917 Z M 12.2092,6.90665L 9.40917,6.90665C 9.29639,7.46664 9.11555,7.90903 8.86667,8.23373L 10.8821,10.2112C 11.4557,9.45288 11.829,8.7626 12.0021,8.14038C 12.0274,8.04123 12.0556,7.91049 12.0867,7.74814C 12.1178,7.58572 12.1586,7.38693 12.2092,7.15164L 12.2092,6.90665 Z M 6.16,0.839966L 5.91792,0.839966C 5.85569,0.865265 5.78424,0.890045 5.70354,0.914337C 5.62285,0.93869 5.53292,0.957642 5.43375,0.971222C 5.29569,0.98291 5.18632,0.995026 5.10562,1.00769C 5.02493,1.02036 4.96611,1.03247 4.92917,1.04416C 4.05806,1.29306 3.36097,1.67899 2.83792,2.20206L 4.83583,4.19998C 5.08472,3.95108 5.52611,3.76443 6.16,3.63998L 6.16,0.839966 Z M 8.58667,6.51584C 8.58667,6.22803 8.53368,5.95972 8.42771,5.71082C 8.32174,5.46191 8.17542,5.24414 7.98875,5.0575C 7.80208,4.87082 7.5843,4.72498 7.33542,4.62C 7.08653,4.51498 6.81917,4.46249 6.53333,4.46249C 6.2475,4.46249 5.98014,4.51498 5.73125,4.62C 5.48236,4.72498 5.2675,4.87082 5.08667,5.0575C 4.90583,5.24414 4.76243,5.46191 4.65646,5.71082C 4.55049,5.95972 4.4975,6.22803 4.4975,6.51584C 4.4975,6.80164 4.55049,7.06558 4.65646,7.30771C 4.76243,7.54977 4.90875,7.76416 5.09542,7.95081C 5.28208,8.13748 5.49694,8.28381 5.74,8.38977C 5.98306,8.49573 6.2475,8.54874 6.53333,8.54874C 6.81917,8.54874 7.08653,8.49573 7.33542,8.38977C 7.5843,8.28381 7.80208,8.14087 7.98875,7.96103C 8.17542,7.78116 8.32174,7.56677 8.42771,7.3179C 8.53368,7.069 8.58667,6.80164 8.58667,6.51584 Z M 2.20208,2.67163L 1.64208,3.51163C 1.44375,3.80917 1.295,4.11343 1.19583,4.42456C 1.15694,4.56262 1.10979,4.74344 1.05438,4.96707C 0.998958,5.19067 0.9275,5.46387 0.84,5.78665L 0.84,5.9733L 3.67792,5.9733C 3.78875,5.52609 3.85097,5.29663 3.86458,5.285C 3.93847,5.04776 4.05611,4.84848 4.2175,4.68704L 2.20208,2.67163 Z M 8.3825,8.82874C 8.13361,9.04068 7.70389,9.22153 7.09333,9.37122L 7.09333,12.2091L 7.28,12.2091L 8.49333,11.8533C 8.69361,11.8028 8.88708,11.7372 9.07375,11.6565C 9.26042,11.5758 9.44028,11.4858 9.61333,11.3866C 9.7125,11.3244 9.82771,11.2467 9.95896,11.1533C 10.0902,11.06 10.2365,10.9453 10.3979,10.8092L 8.3825,8.82874 Z M 4.2175,8.1958C 3.98222,7.91 3.80236,7.48026 3.67792,6.90665L 0.84,6.90665L 0.84,7.11374C 0.902222,7.46179 1.0325,7.9722 1.23083,8.64499C 1.40583,9.03 1.72958,9.55887 2.20208,10.2317L 4.2175,8.1958 Z M 6.16,9.37122C 5.91111,9.30899 5.67778,9.23413 5.46,9.14664C 5.24222,9.05917 5.03417,8.95316 4.83583,8.82874L 2.83792,10.8441L 3.67792,11.4041C 3.93847,11.5908 4.23111,11.7464 4.55583,11.8708C 4.83,11.933 5.29667,12.0458 5.95583,12.2091L 6.16,12.2091L 6.16,9.37122 Z " />
+                        </Canvas>
+                    </Grid>
+                </ControlTemplate>
+            </esri:MarkerSymbol.ControlTemplate>
+        </esri:MarkerSymbol>
+            <esri:MarkerSymbol x:Key="Symbol_Point_Select" OffsetX="4.5" OffsetY="4.5">
+                <esri:MarkerSymbol.ControlTemplate>
+                    <ControlTemplate>
+                        <Grid Width="9" Height="9">
+                            <Ellipse Width="9" Height="9" Fill="Red" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </esri:MarkerSymbol.ControlTemplate>
+            </esri:MarkerSymbol>
+
+            <esri:MarkerSymbol x:Key="Symbol_Resources" OffsetX="6.5" OffsetY="6.5">
+                <esri:MarkerSymbol.ControlTemplate>
+                    <ControlTemplate>
+                        <Grid RenderTransformOrigin="0.5,0.5" Width="13" Height="13">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform X="0" Y="0" />
+                                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Canvas HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Ellipse Fill="Blue" Stroke="Black" StrokeThickness="1" Width="13" Height="13" Canvas.Left="0" Canvas.Top="0" />
+                                <Ellipse Fill="Red" Stroke="Black" StrokeThickness="1" Width="13" Height="13" Canvas.Left="0" Canvas.Top="0">
+                                    <Ellipse.Clip>
+                                        <RectangleGeometry Rect="6.5,0,13,13" />
+                                    </Ellipse.Clip>
+                                </Ellipse>
+                            </Canvas>
+                        </Grid>
+                    </ControlTemplate>
+                </esri:MarkerSymbol.ControlTemplate>
+            </esri:MarkerSymbol>
+
+            <esri:SimpleLineSymbol x:Name="DefaultLineSymbol" Color="Red" Width="4" />
+            <esri:SimpleFillSymbol x:Name="DefaultFillSymbol" Fill="#66FF0000" BorderBrush="Red" BorderThickness="1" />
+            <Style x:Key="MyCustomRow" TargetType="slData:DataGridRow">
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="slData:DataGridRow">
+                            <slPrimitives:DataGridFrozenGrid Name="Root">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition GeneratedDuration="0" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" >
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="Opacity" Duration="0" To=".5"/>
+                                                <ColorAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                                    <SplineColorKeyFrame KeyTime="0" Value="#ebf4fa"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Normal AlternatingRow">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                                                <ColorAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                                    <SplineColorKeyFrame KeyTime="0" Value="#bbd9ee"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="Opacity" Duration="0" To=".5"/>
+                                                <ColorAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                                    <SplineColorKeyFrame KeyTime="0" Value="#8800FFFF"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Normal Selected">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="Opacity" Duration="0" To="1"/>
+                                                <ColorAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                                    <SplineColorKeyFrame KeyTime="0" Value="#8800FFFF"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="MouseOver Selected">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="Opacity" Duration="0" To="1"/>
+                                                <ColorAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                                    <SplineColorKeyFrame KeyTime="0" Value="#8800FFFF"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused Selected">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="Opacity" Duration="0" To="1"/>
+                                                <ColorAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                                    <SplineColorKeyFrame KeyTime="0" Value="#8800FFFF"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.Resources>
+                                    <Storyboard x:Key="DetailsVisibleTransition">
+                                        <DoubleAnimation Storyboard.TargetName="DetailsPresenter" Storyboard.TargetProperty="ContentHeight" 
+                                           Duration="00:00:0.1" />
+                                    </Storyboard>
+                                </Grid.Resources>
+
+                                <Rectangle x:Name="BackgroundRectangle" Grid.RowSpan="2" Grid.ColumnSpan="2" Opacity="0" 
+                                           Fill="#FFFFCC00"/>
+
+                                <slPrimitives:DataGridRowHeader Grid.RowSpan="3" Name="RowHeader" 
+                                           slPrimitives:DataGridFrozenGrid.IsFrozen="True" />
+                                <slPrimitives:DataGridCellsPresenter Grid.Column="1" Name="CellsPresenter" 
+                                           slPrimitives:DataGridFrozenGrid.IsFrozen="True" />
+                                <slPrimitives:DataGridDetailsPresenter Grid.Row="1" Grid.Column="1" Name="DetailsPresenter" />
+                                <Rectangle Grid.Row="2" Grid.Column="1" Name="BottomGridLine" HorizontalAlignment="Stretch" 
+                                           Height="1" />
+                            </slPrimitives:DataGridFrozenGrid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <esri:FillSymbol x:Name="ResultsFillSymbol">
+                <esri:FillSymbol.ControlTemplate>
+                    <ControlTemplate x:Name="CustomPolygonTemplate">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Element"
+                           Storyboard.TargetProperty="(Fill).(Color)"
+                           To="#880000FF" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Element"
+                           Storyboard.TargetProperty="(Fill).(Color)"
+                           To="#8800FFFF" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Element"
+                           Storyboard.TargetProperty="(Fill).(Color)"
+                           To="#8800FFFF" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Path x:Name="Element" Stroke="Blue" Fill="#880000FF"
+                           StrokeStartLineCap="Round" StrokeThickness="2" 
+                           StrokeLineJoin="Round" StrokeEndLineCap="Round" />
+                        </Grid>
+                    </ControlTemplate>
+                </esri:FillSymbol.ControlTemplate>
+            </esri:FillSymbol>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" x:Name="TopBarRowDefinition" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Map View -->
+        <Border x:Name="MapBorder" BorderBrush="#66666666" BorderThickness="1" Grid.Row="0" Grid.RowSpan="2">
+            <Grid x:Name="MapGrid" RenderTransformOrigin="0.5,0.5">
+                <Grid.Projection>
+                    <PlaneProjection x:Name="mapPlaneProjection" RotationX="0"  />
+                </Grid.Projection>
+                <esri:Map x:Name="Map" Background="White" Extent="{StaticResource StartExtent}"  IsLogoVisible="False">
+                    <esri:ArcGISTiledMapServiceLayer ID="BaseLayer" 
+				                Url="http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer" />
+                    <esri:GraphicsLayer ID="MyGraphicsLayer" />
+                    <esri:GraphicsLayer ID="PointGraphicsLayer">
+                        <esri:GraphicsLayer.MapTip>
+                            <Border esri:GraphicsLayer.MapTipHideDelay="00:00:01.5" CornerRadius="10" BorderBrush="#FF222957" BorderThickness="3" Margin="0,0,15,15">
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="1.038,1.136" StartPoint="0.015,0.188">
+                                        <GradientStop Color="#FFD1DFF2"/>
+                                        <GradientStop Color="#FF092959" Offset="0.946"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="10" BlurRadius="14" Direction="300" />
+                                </Border.Effect>
+                                <StackPanel Orientation="Vertical" Margin="20,15,20,15">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                        <TextBlock Text="ID: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [ID]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="DATE: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [PDATE]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="UNIT: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [UNIT]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="VALUE1: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [VALUE1]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="VALUE2: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [VALUE2]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="VALUE3: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [VALUE3]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="ZONE: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [ZONE]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </esri:GraphicsLayer.MapTip>
+                    </esri:GraphicsLayer>
+                    <esri:GraphicsLayer ID="ResourcesGraphicsLayer">
+                        <esri:GraphicsLayer.MapTip>
+                            <Border esri:GraphicsLayer.MapTipHideDelay="00:00:01.5" CornerRadius="10" BorderBrush="#FF222957" BorderThickness="3" Margin="0,0,15,15">
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="1.038,1.136" StartPoint="0.015,0.188">
+                                        <GradientStop Color="#FFD1DFF2"/>
+                                        <GradientStop Color="#FF092959" Offset="0.946"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="10" BlurRadius="14" Direction="300" />
+                                </Border.Effect>
+                                <StackPanel Orientation="Vertical" Margin="20,15,20,15">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                        <TextBlock Text="ID: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [ID]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="NAME: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [NAME]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="TYPE: " FontWeight="Bold" Foreground="#FF0F274E" FontSize="12" />
+                                        <TextBlock Text="{Binding [TYPE]}" Foreground="#FFFFFFFF" FontSize="12" FontStyle="Italic" FontFamily="Portable User Interface" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </esri:GraphicsLayer.MapTip>
+                    </esri:GraphicsLayer>
+                    <esri:GraphicsLayer ID="LabelGraphicsLayer" />
+                </esri:Map>
+                <Rectangle Width="2" Height="10" Fill="Black" Opacity="0.75" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+                <Rectangle Height="2" Width="10" Fill="Black" Opacity="0.75" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+            </Grid>
+        </Border>
+
+        <localtoolkit:Navigator x:Name="nav" Map="{Binding ElementName=Map}" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="nav_Loaded" Grid.Row="1" />
+
+        <!--Menu bar-->
+        <Grid Grid.Row="0" x:Name="TopMenuGrid" Background="{StaticResource BaseColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="{StaticResource BaseColor}" Stroke="White" StrokeThickness="1" Stretch="Fill" Effect="{StaticResource darkDropShadow}" Grid.ColumnSpan="3" />
+            <!-- Application Header -->
+            <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <textControls:RaisedText Text="{StaticResource ApplicationTitle}" TextSize="18" TextWeight="Bold" Margin="5,0,0,0" ShadowOpacity="0.5" />
+                </Grid>
+            </Grid>
+
+            <!-- Menus on right side of the menu bar -->
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="2">
+                <Button Name="BtnSearch" Style="{StaticResource ToolbarButton}" Height="30" Width="30" Margin="0,0,2,0"
+            		HorizontalContentAlignment="Left" Padding="2" ToolTipService.ToolTip="信息查询" Click="Button_Click">
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click" >
+                            <actions:ToggleExpandCollapseAction TargetName="" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                    <Image Style="{StaticResource mulitselectImage}" Margin="2" />
+                </Button>
+                <Button Name="BtnMuiltSelect" Style="{StaticResource ToolbarButton}" Height="30" Width="30" Margin="0,0,2,0"
+            		HorizontalContentAlignment="Left" Padding="2" ToolTipService.ToolTip="多边形选择工具" Click="Button_Click">
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click" >
+                            <actions:ToggleExpandCollapseAction TargetName="" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                    <Image Style="{StaticResource mulitselectImage}" Margin="2" />
+                </Button>
+                <Button Style="{StaticResource ToolbarButton}" Height="30" Width="30" Margin="0,0,2,0"
+            		HorizontalContentAlignment="Left" Padding="2" ToolTipService.ToolTip="打开关闭鹰眼地图">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click" >
+                            <actions:ToggleExpandCollapseAction TargetName="OverviewPanel" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Style="{StaticResource overviewImage}" Margin="2" />
+                </Button>
+                <Button Style="{StaticResource ToolbarButton}" Height="30" Width="30" Margin="0,0,2,0"
+            		HorizontalContentAlignment="Left" Padding="2" ToolTipService.ToolTip="打开关闭地图导航工具">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click" >
+                            <actions:ToggleVisibilityAction TargetName="nav" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Style="{StaticResource compassImage}" Margin="2" />
+                </Button>
+                <Button Style="{StaticResource ToolbarButton}" Height="30" Width="30" Margin="0,0,2,0"
+            		HorizontalContentAlignment="Left" Padding="2" ToolTipService.ToolTip="关于系统">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click" >
+                            <actions:ToggleExpandCollapseAction TargetName="AboutPanel" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Style="{StaticResource aboutImage}" Margin="2" />
+                </Button>
+                <Button Style="{StaticResource ToolbarButton}" Margin="0,0,2,0" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click" >
+                            <actions:ToggleFullScreenAction />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Style="{StaticResource fullScreenImage}" Height="24" Margin="-4"
+                		ToolTipService.ToolTip="Toggle Fullscreen"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- OverviewMap Panel -->
+        <userControls:GlassPanel x:Name="OverviewPanel" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" IsOpen="False" IsResizeable="False">
+            <esri:OverviewMap x:Name="OVMap" Width="300" Height="150" Map="{Binding ElementName=Map}" MaximumExtent="-180,-90,180,90" Margin="0,10,0,10" >
+                <esri:ArcGISTiledMapServiceLayer Url="http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer" />
+            </esri:OverviewMap>
+        </userControls:GlassPanel>
+
+        <!-- About Panel -->
+        <userControls:GlassPanel x:Name="AboutPanel" Grid.Row="1" IsOpen="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="450" IsResizeable="False" >
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <textControls:RaisedText x:Name="AppTitleText" Text="{StaticResource ApplicationTitle}" TextSize="18" Margin="5,3,0,0" />
+                </Grid>
+                <Grid>
+                    <textControls:RaisedText x:Name="AppSubTitleText" Text="{StaticResource ApplicationSubtitle}" Margin="5,1,0,0" />
+                 </Grid>
+                <Line X1="5" Y1="50" X2="355" Y2="50" Stroke="White" StrokeThickness="0.25" Effect="{StaticResource miniDarkDropShadow}" />
+                <Grid>
+                    <textControls:RaisedText x:Name="AppInfoText" Text="{StaticResource ApplicationInfo}" TextSize="9" Margin="5,3,0,0" />
+                </Grid>
+            </StackPanel>
+
+        </userControls:GlassPanel>
+
+        <!-- Query Results Display-->
+        <userControls:CollapsiblePanel Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="ResultsDisplay"  IsExpanded="False"  
+                                           RenderTransformOrigin="1,1"
+                                           VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Margin="5" Effect="{StaticResource dropShadow}" >
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <Border Background="{StaticResource PanelGradient}" BorderBrush="{StaticResource CommonBorderBrush}" BorderThickness="1" CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                    <!--<Border Effect="{StaticResource miniDropShadow}" Style="{StaticResource PanelBorder}" Padding="15" Margin="10">-->
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock x:Name="DataDisplayTitle" Text="查询结果" Foreground="Black" FontSize="9" Margin="10" FontWeight="Bold" />
+                        <!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10,0,10,10" Width="380" Height="170" >-->
+                        <slData:DataGrid x:Name="QueryDetailsDataGrid" AutoGenerateColumns="False" Width="Auto" Height="170" HeadersVisibility="Column" Background="White" 
+																							IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
+																							RowStyle="{StaticResource MyCustomRow}" CanUserSortColumns="True"
+																							SelectionChanged="QueryDetailsDataGrid_SelectionChanged"
+																							LoadingRow="QueryDetailsDataGrid_LoadingRow">
+                            <slData:DataGrid.Columns>
+                                <slData:DataGridTextColumn Binding="{Binding Attributes[STATE_NAME]}" Header="State Name"/>
+                                <slData:DataGridTextColumn Binding="{Binding Attributes[SUB_REGION]}" Header="Region"/>
+                                <slData:DataGridTextColumn Binding="{Binding Attributes[POP2008]}" Header="Population"/>
+                            </slData:DataGrid.Columns>
+                        </slData:DataGrid>
+                        <!--</ScrollViewer>-->
+                    </StackPanel>
+                    <!--</Border>-->
+                </Border>
+                <Image Source="images/CloseX.png" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" Stretch="None" Cursor="Hand" ToolTipService.ToolTip="Close" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown" >
+                            <actions:ToggleCollapseAction TargetName="ResultsDisplay" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
+            </Grid>
+        </userControls:CollapsiblePanel>
+
+    </Grid>
+</UserControl>

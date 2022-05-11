@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetPoints">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPointsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPointsResult" type="tns:ArrayOfGPoint" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfGPoint">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GPoint" nillable="true" type="tns:GPoint" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GPoint">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="X" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Y" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="UNIT" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZONE" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PDATE" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="VALUE1" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="VALUE2" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="VALUE3" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetResources">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetResourcesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetResourcesResult" type="tns:ArrayOfGResources" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfGResources">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GResources" nillable="true" type="tns:GResources" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GResources">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="X" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Y" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="NAME" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TYPE" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPointsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPoints" />
+  </wsdl:message>
+  <wsdl:message name="GetPointsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResourcesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetResources" />
+  </wsdl:message>
+  <wsdl:message name="GetResourcesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetResourcesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DBServiceSoap">
+    <wsdl:operation name="GetPoints">
+      <wsdl:input message="tns:GetPointsSoapIn" />
+      <wsdl:output message="tns:GetPointsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResources">
+      <wsdl:input message="tns:GetResourcesSoapIn" />
+      <wsdl:output message="tns:GetResourcesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DBServiceSoap" type="tns:DBServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPoints">
+      <soap:operation soapAction="http://tempuri.org/GetPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResources">
+      <soap:operation soapAction="http://tempuri.org/GetResources" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DBServiceSoap12" type="tns:DBServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPoints">
+      <soap12:operation soapAction="http://tempuri.org/GetPoints" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResources">
+      <soap12:operation soapAction="http://tempuri.org/GetResources" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DBService">
+    <wsdl:port name="DBServiceSoap" binding="tns:DBServiceSoap">
+      <soap:address location="http://localhost:1833/Web/DBService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DBServiceSoap12" binding="tns:DBServiceSoap12">
+      <soap12:address location="http://localhost:1833/Web/DBService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

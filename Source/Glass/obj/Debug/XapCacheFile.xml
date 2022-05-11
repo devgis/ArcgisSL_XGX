@@ -1,0 +1,19 @@
+﻿<xapCache source="E:\WORK\arcgis for silverlight\Work017\Work\Glass\Bin\Debug\Glass.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="2013/7/16 22:50:26">
+  <file source="E:\WORK\arcgis for silverlight\Work017\Work\Glass\obj\Debug\Glass.dll" archivePath="Glass.dll" lastWriteTime="2013/7/16 22:50:24" />
+  <file source="C:\Program Files (x86)\ESRI SDKs\Silverlight\v2.4\ESRI.ArcGIS.Client.Behaviors.dll" archivePath="ESRI.ArcGIS.Client.Behaviors.dll" lastWriteTime="2012/1/10 18:29:00" />
+  <file source="C:\Program Files (x86)\ESRI SDKs\Silverlight\v2.4\ESRI.ArcGIS.Client.dll" archivePath="ESRI.ArcGIS.Client.dll" lastWriteTime="2012/1/10 18:29:02" />
+  <file source="C:\Program Files (x86)\ESRI SDKs\Silverlight\v2.4\ESRI.ArcGIS.Client.Toolkit.dll" archivePath="ESRI.ArcGIS.Client.Toolkit.dll" lastWriteTime="2012/1/10 18:29:02" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Data.dll" archivePath="System.Windows.Controls.Data.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Data.Input.dll" archivePath="System.Windows.Controls.Data.Input.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Toolkit\Apr10\Bin\System.Windows.Controls.Input.Toolkit.dll" archivePath="System.Windows.Controls.Input.Toolkit.dll" lastWriteTime="2010/4/13 20:14:58" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Toolkit\Apr10\Bin\System.Windows.Controls.Toolkit.dll" archivePath="System.Windows.Controls.Toolkit.dll" lastWriteTime="2010/4/13 20:15:14" />
+  <file source="E:\WORK\arcgis for silverlight\Work017\Work\Glass\Bin\Debug\System.Windows.Interactivity.dll" archivePath="System.Windows.Interactivity.dll" lastWriteTime="2013/7/7 10:06:44" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Xml.Serialization.dll" archivePath="System.Xml.Serialization.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Data.dll" archivePath="System.Windows.Data.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="2010/8/26 2:17:48" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Toolkit\Apr10\Bin\System.Windows.Controls.Toolkit.Internals.dll" archivePath="System.Windows.Controls.Toolkit.Internals.dll" lastWriteTime="2010/4/13 19:59:48" />
+  <file source="E:\WORK\arcgis for silverlight\Work017\Work\Glass\ServiceReferences.ClientConfig" archivePath="ServiceReferences.ClientConfig" lastWriteTime="2013/7/8 22:59:19" />
+  <file source="E:\WORK\arcgis for silverlight\Work017\Work\Glass\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="2013/7/16 22:26:32" />
+</xapCache>
